@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/index_roadmap.css">
+<link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic|Open+Sans:300,400,500,700|Waiting+for+the+Sunrise|Shadows+Into+Light' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="css/slider.css">
+<link rel="stylesheet" href="css/roadmap.css">
+<link rel="stylesheet" href="css/form.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@google/generative-ai"></script>
+
+<title>My Website</title>
+<script>
+    const forms = {
+        "personal-info": `
+        <div class="form-row">  
+          <label  class="inp">
+          <input type="text" id="fname" placeholder="&nbsp;">
+            <span class="label">Name</span>
+            <span class="focus-bg"></span>
+          </label>
+
+          <label  class="inp">
+            <input type="number" id="phone" placeholder="&nbsp;">
+            <span class="label">Phone</span>
+            <span class="focus-bg"></span>
+          </label>
+        </div>
+
+        <div class="form-row">  <label  class="inp">
+            <input type="email" id="email" placeholder="&nbsp;">
+            <span class="label">Email</span>
+            <span class="focus-bg"></span>
+          </label>
+
+          <label  class="inp">
+            <input type="text" id="interests" placeholder="&nbsp;">
+            <span class="label">Interests</span>
+            <span class="focus-bg"></span>
+          </label>
+        </div>
+
+            
+        `,
+        "education": `
+        <div class="form-row">  
+          <label  class="inp">
+          <input type="text" id="schoolName" placeholder="&nbsp;">
+            <span class="label">School Name</span>
+            <span class="focus-bg"></span>
+          </label>
+
+          <label  class="inp">
+            <input type="date" id="schoolyear" placeholder="&nbsp;" style="width:55%">
+            <span class="label">Grad Year</span>
+            <span class="focus-bg"></span>
+          </label>
+        </div>
+
+        <div class="form-row">  
+          <label  class="inp">
+          <input type="text" id="collegeName" placeholder="&nbsp;">
+            <span class="label">University</span>
+            <span class="focus-bg"></span>
+          </label>
+
+          <label  class="inp">
+            <input type="date" id="graduationYear" placeholder="&nbsp;" style="width:55%">
+            <span class="label">Graduation Year</span>
+            <span class="focus-bg"></span>
+          </label>
+        </div>
+
+        <div class="form-row">  
+          <label  class="inp">
+          <input type="text" id="degreeName" placeholder="&nbsp;" style="width:95%;">
+            <span class="label">Degree Name</span>
+            <span class="focus-bg"></span>
+          </label>
+        </div>
+        `,
+        "experience": `
+        <h2 style="color:#34495E ;margin-bottom:5px; ">Job-1:</h2>
+        <div class="form-row">  
+          <label  class="inp">
+          <input type="text" id="job1-title" placeholder="&nbsp;">
+            <span class="label">Job Title</span>
+            <span class="focus-bg"></span>
+          </label>
+
+          <label  class="inp">
+            <input type="text" id="companyName1" placeholder="&nbsp;">
+            <span class="label">Company Name</span>
+            <span class="focus-bg"></span>
+          </label>
+        </div>
+        
+        <div class="form-row">  
+          <label  class="inp">
+          <input type="text" id="duration1" placeholder="&nbsp;">
+            <span class="label">Duration</span>
+            <span class="focus-bg"></span>
+          </label>
+
+          <label  class="inp">
+            <input type="text" id="responsibilities1" placeholder="&nbsp;" maxlength="40">
+            <span class="label">Job Description</span>
+            <span class="focus-bg"></span>
+          </label>
+        </div>
+
+        <h2 style="color:#34495E ; margin-bottom:5px;">Job-2:</h2>
+        
+        <div class="form-row">  
+          <label  class="inp">
+          <input type="text" id="job2-title" placeholder="&nbsp;">
+            <span class="label">Job Title</span>
+            <span class="focus-bg"></span>
+          </label>
+
+          <label  class="inp">
+            <input type="text" id="companyName2" placeholder="&nbsp;">
+            <span class="label">Company Name</span>
+            <span class="focus-bg"></span>
+          </label>
+        </div>
+
+        <div class="form-row">  
+          <label  class="inp">
+          <input type="text" id="duration2" placeholder="&nbsp;">
+            <span class="label">Duration</span>
+            <span class="focus-bg"></span>
+          </label>
+
+          <label  class="inp">
+            <input type="text" id="responsibilities2" placeholder="&nbsp;" maxlength="40">
+            <span class="label">Job Description</span>
+            <span class="focus-bg"></span>
+          </label>
+        </div>
+        <button class="button-textbox" id="addjob" style="width:20%; height:6vh">+Add Job</button>
+        `,
+        "skills": `
+        
+        <div class="form-row">  
+          <label  class="inp">
+          <input type="text" id="skill1" placeholder="&nbsp;">
+            <span class="label">Skills</span>
+            <span class="focus-bg"></span>
+          </label>
+
+          <label  class="inp">
+            <input type="text" id="skill2" placeholder="&nbsp;" maxlength="40">
+            <span class="label">Skills</span>
+            <span class="focus-bg"></span>
+          </label>
+        </div>
+        <button class="button-textbox" id="addskill" style="width:15%; height:5vh">+Add</button>
+
+        `,
+        
+        "finalize":`
+        <button class="button-textbox" id="downloadButton" onclick="convertHTMLToPDF()"; style="width:20%; height:6vh">
+        Download</button>
+         `
+    };
+</script>
+</head>
+<body>
+<!-- Page 1 -->
+<section id="section1">
+    <div class="page1-container">
+        <div class="header">
+          <nav>
+            <ul>
+                <li><a href="#">ABOUT</a></li>
+                <li><a href="#">YOUR RESUMES</a></li>
+                <li><a href="#">MODELS</a></li>
+                <li><a href="#">LOGIN</a></li>
+            </ul>
+        </nav>
+        </div>
+        <div class="page1-left">
+          <div class="text-box">
+            <br>
+           <h1> STOP APPLYING. </h1><br>
+            <h2>Start getting hired now. </h2><br>
+           <div class="text1"> Build your winning resume <b>NOW!</b><br></div>
+           <br><br><br>
+           <a href="#section2"><button class="button-textbox" id="getstarted2">Get Started!</button></a>
+           <div class="image-box"></div>
+          </div>
+        </div>
+        <div class="page1-right"> 
+          
+          <div class="image-box">
+            
+          </div>
+        </div>
+    </div>
+</section>
+
+<!-- Page 2 -->
+<section id="section2">
+    <div class="page2-container">
+        <!-- page -2 column 1 roadmap section -->
+        <div class="page2-column-roadmap">
+            <div class="list">
+                <h2>RESUME ROADMAP</h2>
+                <ul id="roadmap">
+                  <a href="index.html#section2"><li ><span>CHOOSE TEMPLATE</span></li></a>
+                    <li><span>PERSONAL INFO</span></li>  
+                    <li><span>EDUCATION</span></li>
+                    <li><span>EXPERIENCE</span></li>
+                    <li><span>SKILLS</span></li>
+                    <a href="summary.html#section2"><li><span>SUMMARY</span></li></a>
+                    <li><span>FINALIZE</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="column-wrapper">
+        <!-- page -2 column 2 form section -->
+        <div class="page2-column" id="form-column" >
+        </div>
+        <!-- page -2 column 3 preview section -->
+        <div class="page2-column" >
+            <div class="page2-preview" id="page2-preview" >
+                <iframe id="previewFrame"  seamless="seamless"  frameborder="0" width="100%" height="100%"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+  let fname = "", address = "", phone = "", email = "", summary = "", degreeName = "", schoolName = "", graduationYear = "", jobTitle = "", companyName1 = "", duration1 = "", endDate = "", responsibilities = "", skills = "", accolades = "";
+  
+
+  document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const templateId = urlParams.get('template');
+      const formId = urlParams.get('form');
+      if (templateId) {
+        const iframe = document.getElementById('previewFrame');
+        iframe.src = `template_${templateId}.html`;
+        
+        iframe.onload = () => {
+            // Populate the new template with existing session storage data
+            if (sessionStorage.length > 0) {
+                populatePreviewFromSession();
+            }
+        };
+    } else {
+        console.error('No template ID provided in the URL');
+    }
+       
+
+    const iframe = document.getElementById("previewFrame");
+    const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+      const htmlContent = sessionStorage.getItem('previewHTML');
+      const currentStep = sessionStorage.getItem('currentStep') || 'choose-template';
+      if (htmlContent) {
+          document.getElementById('previewFrame').srcdoc = htmlContent;
+          loadRoadmapStep(currentStep);
+      }
+  });
+
+  function populatePreviewFromSession() {
+    const iframe = document.getElementById("previewFrame");
+    const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+
+    Object.keys(sessionStorage).forEach(key => {
+        if (key !== 'previewHTML' && key !== 'currentStep') {
+            const value = sessionStorage.getItem(key);
+            const previewElement = iframeDocument.getElementById(key);
+            if (previewElement) {
+                previewElement.textContent = value;
+            }
+        }
+    });
+
+    const htmlContent = iframeDocument.documentElement.outerHTML;
+    sessionStorage.setItem('previewHTML', htmlContent);
+}
+
+  document.getElementById("form-column").addEventListener('input', (event) => {
+      if (event.target.tagName === 'INPUT') {
+          updatePreview(event.target.id);
+          const step = sessionStorage.getItem('currentStep') || 'choose-template';
+          updateSessionData(step, event.target.id, event.target.value);
+      }
+  });
+  
+  function updatePreview(targetId) {
+      const value = document.getElementById(targetId).value;
+      // Access the iframe document
+      const iframe = document.getElementById("previewFrame");
+      const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+  
+      switch (targetId) {
+    case "fname":
+      iframeDocument.getElementById("fname").textContent = value;
+      sessionStorage.setItem("fname", value);
+      break;
+    case "phone":
+      iframeDocument.getElementById("phone").textContent = value;
+      sessionStorage.setItem("phone", value);
+      break;
+    case "email":
+      iframeDocument.getElementById("email").textContent = value;
+      sessionStorage.setItem("email", value);
+      break;
+    case "interests":
+      iframeDocument.getElementById("interests").textContent = value;
+      sessionStorage.setItem("interests", value);
+      break;
+    case "schoolName":
+      iframeDocument.getElementById("schoolName").textContent = value;
+      sessionStorage.setItem("schoolName", value);
+      break;
+    case "schoolyear":
+      iframeDocument.getElementById("schoolyear").textContent = value;
+      sessionStorage.setItem("schoolyear", value);
+      break;
+    case "collegeName":
+      iframeDocument.getElementById("collegeName").textContent = value;
+      sessionStorage.setItem("collegeName", value);
+      break;
+    case "degreeName":
+      iframeDocument.getElementById("degreeName").textContent = value;
+      sessionStorage.setItem("degreeName", value);
+      break;
+    case "graduationYear":
+      iframeDocument.getElementById("graduationYear").textContent = value;
+      sessionStorage.setItem("graduationYear", value);
+      break;
+    case "job1-title":
+      iframeDocument.getElementById("job1-title").textContent = value;
+      sessionStorage.setItem("job1-title", value); 
+      break;
+    case "companyName1":
+      iframeDocument.getElementById("companyName1").textContent = value;
+      sessionStorage.setItem("companyName1", value);
+      break;
+    case "duration1":
+      iframeDocument.getElementById("duration1").textContent = value;
+      sessionStorage.setItem("duration1", value);
+      break;
+    case "responsibilities1":
+      iframeDocument.getElementById("responsibilities1").textContent = value;
+      sessionStorage.setItem("responsibilities1", value);
+      break;
+    case "job2-title":
+      iframeDocument.getElementById("job2-title").textContent = value;
+      sessionStorage.setItem("job2-title", value); 
+      break;
+    case "companyName2":
+      iframeDocument.getElementById("companyName2").textContent = value;
+      sessionStorage.setItem("companyName2", value);
+      break;
+    case "duration2":
+      iframeDocument.getElementById("duration2").textContent = value;
+      sessionStorage.setItem("duration2", value);
+      break;
+    case "responsibilities2":
+      iframeDocument.getElementById("responsibilities2").textContent = value;
+      sessionStorage.setItem("responsibilities2", value);
+      break;
+    case "skill1":
+      iframeDocument.getElementById("skill1").textContent = value;
+      sessionStorage.setItem("skill1", value);
+      break;
+    case "skill2":
+      iframeDocument.getElementById("skill2").textContent = value;
+      sessionStorage.setItem("skill2", value);
+      break;
+          default:
+              console.warn(`No matching element found in preview for ID: ${targetId}`);
+      }
+      console.log(sessionStorage.getItem('job1-title'));
+      const htmlContent = iframeDocument.documentElement.outerHTML;
+      sessionStorage.setItem('previewHTML', htmlContent);
+  }
+  
+  function loadRoadmapStep(step) {
+      sessionStorage.setItem('currentStep', step);
+      const formColumn = document.getElementById("form-column");
+      
+      if (forms[step]) {
+          formColumn.innerHTML = forms[step];
+  
+          // Populate form fields with session data
+          const sessionData = getSessionData(step);
+          if (sessionData) {
+              Object.keys(sessionData).forEach(key => {
+                  const input = document.getElementById(key);
+                  if (input) {
+                      input.value = sessionData[key];
+                  }
+              });
+          }
+      }
+  }
+  
+  function getSessionData(step) {
+      const storedData = sessionStorage.getItem(step);
+      return storedData ? JSON.parse(storedData) : null;
+  }
+  
+  function updateSessionData(step, key, value) {
+      const sessionData = getSessionData(step) || {};
+      sessionData[key] = value;
+      sessionStorage.setItem(step, JSON.stringify(sessionData));
+  }
+  
+  document.getElementById("roadmap").addEventListener("click", (event) => {
+      if (event.target.tagName === "LI" || event.target.tagName === "SPAN") {
+          const step = event.target.textContent.toLowerCase().replace(' ', '-');
+          loadRoadmapStep(step);
+      }
+  });
+  
+  
+</script>
+  
+</body>
+</html>

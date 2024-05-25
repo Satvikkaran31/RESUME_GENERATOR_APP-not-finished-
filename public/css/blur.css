@@ -1,0 +1,36 @@
+.header {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(2px);
+  padding: 1em;
+  position: absolute;
+  height: 10vh;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 2;
+}
+@supports not (backdrop-filter: blur(2px)) {
+  .header {
+    background: transparent;
+    overflow: hidden;
+  }
+  .header:before, .header:after {
+    display: block;
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+  }
+  .header:before {
+    filter: url(#svg-blur);
+    z-index: -2;
+  }
+  .header:after {
+    background: rgba(255, 255, 255, 0.5);
+    z-index: -1;
+  }
+}
+
+/*# sourceMappingURL=blur.css.map */

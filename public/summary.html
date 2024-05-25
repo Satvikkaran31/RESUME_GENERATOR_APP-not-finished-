@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/summary.css">
+<link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic|Open+Sans:300,400,500,700|Waiting+for+the+Sunrise|Shadows+Into+Light' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="css/slider.css">
+<link rel="stylesheet" href="css/roadmap.css">
+<link rel="stylesheet" href="css/form.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@google/generative-ai"></script>
+
+<title>My Website</title>
+
+</head>
+<body>
+<!-- Page 1 -->
+
+        <div class="header">
+          <nav>
+            <ul>
+                <li><a href="#">HOME</a></li>
+                <li><a href="#">YOUR RESUMES</a></li>
+                <li><a href="#">MODELS</a></li>
+                <li><a href="#">LOGIN</a></li>
+            </ul>
+        </nav>
+        </div>
+        
+
+<!-- Page 2 -->
+<section id="section2">
+    <div class="page2-container" style="padding-top: 10vh;">
+        <!-- page -2 column 1 roadmap section -->
+        <div class="page2-column-roadmap">
+            <div class="list">
+                <h2>RESUME ROADMAP</h2>
+                <ul id="roadmap">
+                  <a href="index.html#section2"><li ><span>CHOOSE TEMPLATE</span></li></a>
+                    <a href="index_roadmap.html#section2"><li id="personal-info"><span>Personal Info</span></li></a>
+                    <a href="index_roadmap.html#section2"> <li id="education"><span>Education</span></li></a>
+                    <a href="index_roadmap.html#section2"><li id="experience"><span>Experience</span></li></a>
+                    <a href="index_roadmap.html#section2"><li id="skills"><SPAN>Skills</SPAN></li></a>
+                    <li><span>SUMMARY</span></li>
+                    <li><span>FINALIZE</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="column-wrapper">
+        <!-- page -2 column 2 form section -->
+        <div class="page2-column" id="form-column"  >
+          <div class="form-row">  
+          <label  class="inp">
+            <input type="text" id="jobposition" placeholder="&nbsp;">
+              <span class="label">Job Title</span>
+              <span class="focus-bg"></span>
+            </label>
+            <button class="button-textbox" id="software-developer-btn">Generate Summary</button> 
+
+            </div>
+        </div>
+        <!-- page -2 column 3 preview section -->
+        <div class="page2-column" >
+
+            <div class="page2-preview" id="page2-preview"   >
+                <iframe id="previewFrame"  seamless="seamless" frameborder="0" width="100%" height="100%"></iframe>
+            </div>
+           
+        </div>
+    </div>
+</div>
+</div>
+<script src="https://unpkg.com/@google/generative-ai"></script>
+<script>
+   document.addEventListener('DOMContentLoaded', () => {
+    const htmlContent = sessionStorage.getItem('previewHTML');
+    document.getElementById('previewFrame').srcdoc = htmlContent;
+});
+    document.querySelectorAll('#roadmap li').forEach(item => {
+        item.addEventListener('click', () => {
+            sessionStorage.setItem('currentStep', item.id);
+        });
+    }); 
+document.getElementById("jobposition").addEventListener('input', (event) => {
+  sessionStorage.setItem('jobposition', event.target.value);
+});
+// function to download the content
+function convertHTMLToPDF(htmlContent) {
+            const updatedHTMLContent = getHTMLContentFromIframe();
+            const pdf = new jsPDF();
+            pdf.fromHTML(updatedHTMLContent, 10, 10);
+            pdf.save('resume.pdf');
+}
+async function generateText() {
+  try {
+            // Retrieve values from session storage
+            const jobPosition =sessionStorage.getItem('jobposition') ||'not specified';
+            const experience1 = sessionStorage.getItem('job1-title') || 'not specified';
+            const experience2 = sessionStorage.getItem('job2-title') || 'not specified';
+            const duration1= sessionStorage.getItem('duration1') || 'not specified';
+            const duration2 = sessionStorage.getItem('duration2') || 'not specified';
+            const interests = sessionStorage.getItem('interests') || 'not specified';
+            const skill1 = sessionStorage.getItem('skill1') || 'not specified';
+            const skill2 = sessionStorage.getItem('skill2') || 'not specified';
+            // Construct the prompt string
+            let prompt = `Generate a professional summary for a person applying for the position of ${jobPosition}. 
+                          Experience1: ${experience1},. 
+                          Duration1: ${duration1}. 
+                          Experience2: ${experience2},.
+                          Duration1: ${duration2}.  
+                          Interests: ${interests}. 
+                          Skills: ${skill1},${skill2}. 
+                          Please keep it between 50-100 words and professional and human. 
+                          IMPORTANT-IF THE INFORMATION IN ANY OF THESE FIELDS SEEMS IRRELEVANT TO THE JOB- FEEL FREE TO OMMIT THEM
+                          ALSO IF THE PROMPTS ARE TOO PERSONAL OR EMOTINAL IGNORE THEN MAKE SURE TO KEEP IT PROFESSIONAL AND HUMAN
+                          , ALSO MAKE SURE TO NOT OVER EXAGGERATE`;
+
+    const serverUrl = 'http://localhost:5000/generate-text'; 
+    const response = await fetch(serverUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ prompt }), 
+    });
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      throw new Error(`Error: ${responseData.error}`);
+    }
+
+    const generatedText = responseData.generatedText;
+    console.log('Generated Text:', generatedText);
+
+    const iframeDoc = document.getElementById("previewFrame").contentDocument;
+    const summaryElement = iframeDoc.getElementById("summary");
+    summaryElement.textContent = generatedText;
+    const htmlContent = iframeDoc.documentElement.outerHTML;
+    sessionStorage.setItem('summary',generatedText)
+    sessionStorage.setItem('previewHTML', htmlContent);
+  } catch (error) {
+    alert('Network issues!')
+    console.error('Error generating text:', error);
+  }
+}
+const generateSummaryBtn = document.getElementById("software-developer-btn");
+generateSummaryBtn.addEventListener("click", () => generateText(prompt)
+);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,267 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .header {
+    background-color:  transparent;
+    color: #fff;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 10vh; 
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0);
+    z-index: 2;
+    opacity: 1;
+    backdrop-filter: blur(5px);
+    align-items: center;
+    
+  }
+
+  nav ul {
+    font-family: sans-serif;
+    list-style-type: none;
+    margin: 0;
+    padding-top: 0.5vh;
+    justify-self: center;
+    margin-left: 110vh;
+
+}
+
+nav li {
+    display:inline-flex;
+    margin-left: 0.5em; 
+    margin-top: 0.3em;
+    font-family: sans-serif;
+    font-size: 1.8rem;
+}
+
+nav a {
+    color: #1B2631 ;
+    font-weight: bold;
+    text-decoration: none;
+    margin-right: 1px;
+}
+nav a:hover{
+    color: #E74C3C ;
+}
+  .page1-container {
+    min-height: 100vh; 
+    background-color: blue;
+    background-image: url("../images/blue_white_bg.png");
+    background-size:cover ;
+    display: flex;
+    padding-top: 10vh;
+    
+  }
+  .page1-left{
+    width: 50%;
+    height: 90vh;
+    background-color: transparent;
+  }
+  .page1-right{
+    width: 50%;
+    height: 90vh;
+    background-color: transparent;
+    padding-top:10vh;
+    
+  }
+  .text-box{
+    width: 80%;
+    height: 60vh;
+    /* background-color: purple; */
+    transform: translate(10vh,5vh);
+    padding-left: 7em;
+    padding-top: 2em;
+    line-height: 1;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
+  }
+  .text-box a{
+    text-decoration: none
+  }
+  .text-box h1{
+  font-size: 5em;
+  line-height: 1;
+  }
+  .page1-left .image-box{
+    height: 23vh;
+    width: 35%;
+    position: absolute;
+    background-image: url("../images/resume_art_scientist_no_bg.png");
+    background-size: cover;
+    transform: translate(30vh,-15vh);
+    box-shadow: none;
+    border-radius: 10px;
+    /* background-color: purple; */
+  }
+  .text-box h2{
+    font-size: 2.5em;
+    line-height: 1;
+    }
+  .text1{
+    font-size: 1.5em;
+  }
+  .text-box img{
+    width: 50vh;
+    height: 50vh;
+  }
+  .image-box  {
+    width: 60%;
+    height: 65vh;
+    background-image: url('../images/resume_art_2.jpg');
+    background-size: cover;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transform: translate(20vh);
+  }
+
+  .page2-container {
+    display: flex;
+    background-color: white;
+    flex-wrap: wrap;
+    gap: 1em;
+    padding: 20px;
+    box-sizing: border-box;
+    min-height: 90vh; 
+  }
+  
+  .page2-column {
+    flex: none;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    color: white;
+    height: 74vh;
+  }
+
+  .page2-column img{
+    width: 60%;
+    height: 50vh;
+  }
+
+  .list a{
+    text-decoration: none;
+    color: white;
+  }
+ 
+  .column-wrapper {
+    display: flex; 
+    /* border: 2px solid grey;  */
+    border-radius: 10px;
+    gap: 10px;
+    padding: 1px;
+    width: 73%; 
+    height: 75vh;
+     background-color: white  ;
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);  */
+  }
+  .page2-column-roadmap {
+    flex: none;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    color: white;
+    height: 75vh;
+    background-color:#2874A6   ;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  .column-wrapper .page2-column:first-child{ 
+    width: 60%; 
+    background-color: inherit;
+  }
+  
+  
+ 
+  .c2-heading{
+    min-height: 9%;
+    margin-bottom: 1rem;
+
+  }
+
+  .c2-heading h2{
+    color: #1C2833;
+  font-weight: 900;
+  letter-spacing: 1px;
+  font-size: 2rem;
+  }
+
+  .page2-form{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px;
+    min-height: 85%; 
+    border-radius: 10px;
+    padding: 1em;
+  }
+ 
+  .page2-preview {
+  height: 100%;
+  border-radius: no;
+  overflow: hidden;
+}
+.page2-column:last-child {
+  height: 100%;
+  width: 39%; 
+  padding: 0;
+  overflow: hidden;
+  /* background-color: green; */
+}
+#previewFrame {
+    width: 100%; 
+    height: 100%; 
+    overflow: hidden;
+    transform: scale(0.9);
+    border-radius: 10px;
+    border: 2px solid grey;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+
+.button-textbox {
+  appearance: button;
+  backface-visibility: hidden;
+  background-color: #405cf5;
+  border-radius: 6px;
+  border-width: 0;
+  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-family: -apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif;
+  font-size: 100%;
+  height: 3em;
+  line-height: 1.15;
+  margin: 12px 0 0;
+  outline: none;
+  overflow: hidden;
+  padding: 0 25px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transform: translateZ(0);
+  transition: all .2s,box-shadow .08s ease-in;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 40%;
+}
+
+.button-textbox:disabled {
+  cursor: default;
+}
+.button-textbox:hover {
+  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset, rgba(50, 50, 93, .2) 0 6px 15px 0, rgba(0, 0, 0, .1) 0 2px 2px 0, rgba(50, 151, 211, .3) 0 0 0 4px;
+}  
+
+/* roadmap form styling */
+.form-row {
+  display: flex;
+  flex-direction: row; 
+  justify-content: space-between; 
+  margin-bottom: 10px;  
+  /* background-color: brown; */
+  margin-bottom: 2em;
+}

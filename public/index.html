@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/index.css">
+<link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic|Open+Sans:300,400,500,700|Waiting+for+the+Sunrise|Shadows+Into+Light' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="css/roadmap.css">
+<title>My Website</title>
+</head>
+<body>
+
+
+<!-- Page 1 -->
+<section id="section1">
+
+    <div class="page1-container">
+        <!-- Header -->
+        <div class="header">
+          <nav>
+            <ul>
+                <li><a href="#">ABOUT</a></li>
+                <li><a href="#">YOUR TEMPLATES</a></li>
+                <li><a href="#">MODELS</a></li>
+                <li><a href="#">LOGIN</a></li>
+            </ul>
+        </nav>
+        </div>
+        <!-- HERO SECTION -->
+        <div class="page1-left">
+          <div class="text-box">
+            <br>
+           <h1> STOP APPLYING. </h1><br>
+            <h2>Start getting hired now. </h2><br>
+           <div class="text1"> Build your winning resume <b>NOW!</b><br></div>
+           <br><br><br>
+           <a href="#section2"><button class="button-textbox" id="getstarted">Get Started!</button></a>
+           <div class="image-box"></div>
+          </div>
+        </div>
+        <div class="page1-right"> 
+          
+          <div class="image-box">
+            
+          </div>
+        </div>
+    </div>
+</section>
+
+<!-- Page 2 -->
+<section id="section2">
+    <div class="page2-container">
+        <!-- page -2 column 1 roadmap section -->
+        <div class="page2-column-roadmap">
+            <div class="list">
+                <h2>RESUME ROADMAP</h2>
+                <ul id="roadmap">
+                    <li id="choose-template-option"><span>CHOOSE TEMPLATE</span></li>
+                    <li><span>PERSONAL INFO</span></li>
+                    <li><span>EDUCATION</span></li>
+                    <li><span>EXPERIENCE</span></li>
+                    <li><span>SKILLS</span></li>
+                    <li><span>SUMMARY</span></li>
+                    <li><span>FINALIZE</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="column-wrapper">
+        <!-- page -2 column 2 form section -->
+        <div class="page2-column" id="form-column" style="width: 100%;" >
+            <div class="c2-heading">
+                <h2>CHOOSE YOUR TEMPLATE</h2>
+            </div>
+            <div class="template-container">
+                <div class="template-preview" id="template1Preview" data-id="1" >
+                  <img class="active" src="images/TEMPLATE1.png" alt="Template 1">
+                </div>
+                <div class="template-preview" id="template2Preview" data-id="2" >
+                  <img class="active" src="images/TEMPLATE2.png" alt="Template 2">
+                </div>
+                <div class="template-preview" id="template3Preview" data-id="3" >
+                  <img class="active" src="images/TEMPLATE3.png" alt="Template 3">
+                </div>
+              </div>
+              <button class="button-textbox" id="nextButton" style="width: 15%; height:3em; transform: translate(57vw,13vh);" >Next</button>
+        </div>
+       
+      
+</div>
+</div>
+<script>
+    // ALERTING THE USER IF THE ROADMAP IS CLICKED WITHOUT SELECTING THE TEMPLATE 
+const roadmapItems = document.querySelectorAll('#roadmap li:not(#choose-template-option)');
+roadmapItems.forEach((item) => {
+    item.addEventListener('click', () => {
+        if (!templateId) {
+            alert('Please choose a template first.');
+        } else {
+            
+            console.log(`Clicked ${item.textContent}`);
+        }
+    });
+});
+let templateId;
+const templatePreviews = document.querySelectorAll('.template-preview img');
+templatePreviews.forEach((preview) => {
+    preview.addEventListener('click', () => {
+        templateId = preview.parentElement.getAttribute('data-id');
+    });
+});
+
+// Add event listener for the Next button
+const nextButton = document.getElementById('nextButton');
+nextButton.addEventListener('click', () => {
+    sessionStorage.removeItem("previewHTML");
+    window.location.href = `index_roadmap.html?template=${templateId}&form=personal-info#section2`;
+});
+</script>
+
+</body>
+</html>
