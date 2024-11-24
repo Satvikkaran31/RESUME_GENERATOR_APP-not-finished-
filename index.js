@@ -4,7 +4,7 @@ const path = require('path');
 const fetch = require('node-fetch'); 
 const { GoogleGenerativeAI } = require("@google/generative-ai"); 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 4000;
 
 app.use(express.json()); 
 app.use(express.static(path.join(__dirname, 'public')));

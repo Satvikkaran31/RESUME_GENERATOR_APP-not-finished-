@@ -48,7 +48,6 @@ nav a:hover{
 }
   .page1-container {
     min-height: 100vh; 
-    background-color: blue;
     background-image: url("../images/blue_white_bg.png");
     background-size:cover ;
     display: flex;

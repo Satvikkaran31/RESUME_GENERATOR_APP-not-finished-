@@ -89,12 +89,7 @@ document.getElementById("jobposition").addEventListener('input', (event) => {
   sessionStorage.setItem('jobposition', event.target.value);
 });
 // function to download the content
-function convertHTMLToPDF(htmlContent) {
-            const updatedHTMLContent = getHTMLContentFromIframe();
-            const pdf = new jsPDF();
-            pdf.fromHTML(updatedHTMLContent, 10, 10);
-            pdf.save('resume.pdf');
-}
+
 async function generateText() {
   try {
             // Retrieve values from session storage
@@ -121,7 +116,7 @@ async function generateText() {
                           Skills: ${skill1},${skill2}. 
                           `;
 
-    const serverUrl = 'http://localhost:5000/generate-text'; 
+    const serverUrl = 'http://localhost:4000/generate-text'; 
     const response = await fetch(serverUrl, {
       method: 'POST',
       headers: {

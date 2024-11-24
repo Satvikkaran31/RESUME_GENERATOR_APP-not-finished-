@@ -8,10 +8,7 @@
 <link rel="stylesheet" href="css/slider.css">
 <link rel="stylesheet" href="css/roadmap.css">
 <link rel="stylesheet" href="css/form.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@google/generative-ai"></script>
 
 <title>My Website</title>
@@ -230,7 +227,7 @@
         <!-- page -2 column 3 preview section -->
         <div class="page2-column" >
             <div class="page2-preview" id="page2-preview" >
-                <iframe id="previewFrame"  seamless="seamless"  frameborder="0" width="100%" height="100%"></iframe>
+                <iframe id="previewFrame"  frameborder="0" width="100%" height="100%"></iframe>
             </div>
         </div>
     </div>
@@ -381,7 +378,7 @@
           default:
               console.warn(`No matching element found in preview for ID: ${targetId}`);
       }
-      console.log(sessionStorage.getItem('job1-title'));
+     
       const htmlContent = iframeDocument.documentElement.outerHTML;
       sessionStorage.setItem('previewHTML', htmlContent);
   }
@@ -423,8 +420,12 @@
           loadRoadmapStep(step);
       }
   });
-  
-  
+  function convertHTMLToPDF() {
+            const iframe = document.getElementById('previewFrame');
+            const iframeWindow = iframe.contentWindow;
+            iframeWindow.print();
+        }
+
 </script>
   
 </body>
